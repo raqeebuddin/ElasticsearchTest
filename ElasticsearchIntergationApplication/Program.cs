@@ -29,6 +29,8 @@ namespace ElasticsearchIntergationApplication
 
             var indexResponse = client.IndexDocument(person);
 
+            var test = "test";
+
 
         }
     }
