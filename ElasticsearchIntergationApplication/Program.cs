@@ -30,12 +30,12 @@ namespace ElasticsearchIntergationApplication
 
             //var indexResponse = client.IndexDocument(person);
 
-
-            
+            var taskOne = IndexAsync(person).Result;
+    
 
         }
 
-        static async Task<IIndexResponse> IndexAsync(Person person)
+        public static async Task<IIndexResponse> IndexAsync(Person person)
         {
             var asyncIndexResponse = await client.IndexDocumentAsync(person);
             return asyncIndexResponse;
