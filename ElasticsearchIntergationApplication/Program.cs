@@ -14,24 +14,31 @@ namespace ElasticsearchIntergationApplication
 {
     class Program
     {
+        static ElasticClient client;
         static void Main(string[] args)
         {
             var settings = new ConnectionSettings(new Uri("http://localhost:9200")).DefaultIndex("people");
-            var client = new ElasticClient(settings);
+            client = new ElasticClient(settings);
 
             //index a single poco
 
             var person = new Person
             {
-                FirstName = "Martijn1",
+                FirstName = "MartijnAsync",
                 LastName = "Laarman"
             };
 
-            var indexResponse = client.IndexDocument(person);
-
-            var test = "test";
+            //var indexResponse = client.IndexDocument(person);
 
 
+            
+
+        }
+
+        static async Task<IIndexResponse> IndexAsync(Person person)
+        {
+            var asyncIndexResponse = await client.IndexDocumentAsync(person);
+            return asyncIndexResponse;
         }
     }
 }
