@@ -17,7 +17,7 @@ namespace ElasticsearchIntergationApplication
         static ElasticClient client;
         static void Main(string[] args)
         {
-            var settings = new ConnectionSettings(new Uri("http://localhost:9200")).DefaultIndex("people");
+            var settings = new ConnectionSettings(new Uri("http://localhost:9200"));
             client = new ElasticClient(settings);
 
             //index a single poco
@@ -30,18 +30,28 @@ namespace ElasticsearchIntergationApplication
 
             //var indexResponse = client.IndexDocument(person);
 
-            var taskOne = IndexAsync(person).Result;
+            //var taskOne = IndexAsync(person).Result;
 
             var searchResponse = client.Search<Person>(s => s
-            .From(0)
-            .Size(10)
-            .Query(q => q.Match(m => m
+    .AllIndices()
+    .From(0)
+    .Size(10)
+    .Query(q => q
+         .Match(m => m
             .Field(f => f.FirstName)
             .Query("Martijn")
-         ))
-
-        
+         )
+    )
 );
+
+         //   var searchResponse = client.Search<Person>(s => s
+         //   .From(0)
+         //   .Size(10)
+         //   .Query(q => q.Match(m => m
+         //   .Field(f => f.FirstName)
+         //   .Query("Martijn")
+         //))
+         //   );
             var people = searchResponse.Documents;
         }
 
